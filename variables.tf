@@ -21,8 +21,8 @@ EOT
     location                  = string
     name                      = string
     resource_group_name       = string
-    auto_key_rotation_enabled = optional(bool, false)
-    encryption_type           = optional(string, "EncryptionAtRestWithCustomerKey")
+    auto_key_rotation_enabled = optional(bool)   # Default: false
+    encryption_type           = optional(string) # Default: "EncryptionAtRestWithCustomerKey"
     federated_client_id       = optional(string)
     key_vault_key_id          = optional(string)
     managed_hsm_key_id        = optional(string)
