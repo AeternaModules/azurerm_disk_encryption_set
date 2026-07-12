@@ -1,3 +1,7 @@
+output "disk_encryption_sets_id" {
+  description = "Map of id values across all disk_encryption_sets, keyed the same as var.disk_encryption_sets"
+  value       = { for k, v in azurerm_disk_encryption_set.disk_encryption_sets : k => v.id }
+}
 output "disk_encryption_sets_auto_key_rotation_enabled" {
   description = "Map of auto_key_rotation_enabled values across all disk_encryption_sets, keyed the same as var.disk_encryption_sets"
   value       = { for k, v in azurerm_disk_encryption_set.disk_encryption_sets : k => v.auto_key_rotation_enabled }
