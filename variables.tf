@@ -21,8 +21,8 @@ EOT
     location                  = string
     name                      = string
     resource_group_name       = string
-    auto_key_rotation_enabled = optional(bool)   # Default: false
-    encryption_type           = optional(string) # Default: "EncryptionAtRestWithCustomerKey"
+    auto_key_rotation_enabled = optional(bool)
+    encryption_type           = optional(string)
     federated_client_id       = optional(string)
     key_vault_key_id          = optional(string)
     managed_hsm_key_id        = optional(string)
@@ -32,14 +32,6 @@ EOT
       type         = string
     })
   }))
-  validation {
-    condition = alltrue([
-      for k, v in var.disk_encryption_sets : (
-        v.federated_client_id == null || (can(regex("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", v.federated_client_id)))
-      )
-    ])
-    error_message = "must be a valid UUID"
-  }
   # --- Unconfirmed validation candidates, derived from azurerm_disk_encryption_set's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
@@ -70,6 +62,9 @@ EOT
   #   source:    [from keyvault.ValidateNestedItemID] err != nil
   # path: encryption_type
   #   source:    validation.StringInSlice value list is not a literal []string - likely a generated PossibleValuesFor*() helper; resolve separately
+  # path: federated_client_id
+  #   condition: can(regex("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$", value))
+  #   message:   must be a valid UUID
   # path: identity.type
   #   source:    validation.StringInSlice value list is not a literal []string - likely a generated PossibleValuesFor*() helper; resolve separately
   # path: identity.identity_ids[*]
