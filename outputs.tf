@@ -30,10 +30,6 @@ output "disk_encryption_sets_location" {
   description = "Map of location values across all disk_encryption_sets, keyed the same as var.disk_encryption_sets"
   value       = { for k, v in azurerm_disk_encryption_set.disk_encryption_sets : k => v.location if v.location != null && length(v.location) > 0 }
 }
-output "disk_encryption_sets_managed_hsm_key_id" {
-  description = "Map of managed_hsm_key_id values across all disk_encryption_sets, keyed the same as var.disk_encryption_sets"
-  value       = { for k, v in azurerm_disk_encryption_set.disk_encryption_sets : k => v.managed_hsm_key_id if v.managed_hsm_key_id != null && length(v.managed_hsm_key_id) > 0 }
-}
 output "disk_encryption_sets_name" {
   description = "Map of name values across all disk_encryption_sets, keyed the same as var.disk_encryption_sets"
   value       = { for k, v in azurerm_disk_encryption_set.disk_encryption_sets : k => v.name if v.name != null && length(v.name) > 0 }
