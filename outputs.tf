@@ -16,7 +16,7 @@ output "disk_encryption_sets_federated_client_id" {
 }
 output "disk_encryption_sets_identity" {
   description = "Map of identity values across all disk_encryption_sets, keyed the same as var.disk_encryption_sets"
-  value       = { for k, v in azurerm_disk_encryption_set.disk_encryption_sets : k => v.identity if v.identity != null && length(v.identity) > 0 }
+  value       = { for k, v in azurerm_disk_encryption_set.disk_encryption_sets : k => one(v.identity) if v.identity != null && length(v.identity) > 0 }
 }
 output "disk_encryption_sets_key_vault_key_id" {
   description = "Map of key_vault_key_id values across all disk_encryption_sets, keyed the same as var.disk_encryption_sets"
